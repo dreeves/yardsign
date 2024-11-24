@@ -27,14 +27,10 @@ backdrop.addEventListener('click', hidePopup);
 
 // There must be a way to do this in CSS but LLMs and I are too dumb.
 function updateScale() {
-  console.log("updateScale called");
   const elem = document.getElementById('cynosure');
   if (!elem) return;
   const currentWidth = elem.offsetWidth;
   const currentHeight = elem.offsetHeight;
-
-  console.log(`Dimensions: ${currentWidth}x${currentHeight}`);
-
   // Store these dimensions to detect changes
   if (!elem.lastWidth) {
     elem.lastWidth = currentWidth;
@@ -43,7 +39,6 @@ function updateScale() {
     requestAnimationFrame(updateScale);
     return;
   }
-  // If dimensions changed, update and check again
   if (elem.lastWidth !== currentWidth || elem.lastHeight !== currentHeight) {
     elem.lastWidth = currentWidth;
     elem.lastHeight = currentHeight;
@@ -53,8 +48,6 @@ function updateScale() {
   const scaleX = (window.innerWidth * 0.95) / currentWidth;
   const scaleY = (window.innerHeight * 0.95) / currentHeight;
   const scale = Math.min(scaleX, scaleY);
-
-  console.log(`Applying scale: ${scale}`);
   elem.style.transform = `scale(${scale})`;
 }
 
@@ -75,6 +68,7 @@ document.addEventListener('DOMContentLoaded', updateScale);
 document.fonts.ready.then(updateScale);
 // Call when window is resized (using existing debounced version)
 window.addEventListener('resize', debouncedUpdateScale);
+
 
 // Derived from fitty, with fix for line height:
 // https://github.com/rikschennink/fitty/blob/gh-pages/src/fitty.js
