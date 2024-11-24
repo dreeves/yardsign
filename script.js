@@ -412,6 +412,8 @@ function lineChanged(target) {
         let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
         window.history.pushState({path: newurl}, '', newurl);
     }
+    
+    requestAnimationFrame(updateScale);
 }
 
 function copyToClipboard() {
