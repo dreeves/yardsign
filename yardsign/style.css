@@ -45,23 +45,23 @@ h1, p {
     margin: 10px;
 }
 
-.line1 {
+.line1, .line7 {
     color: white;
 }
 
-.line2 {
+.line2, .line8 {
     color: #b55d19;
 }
 
-.line3 {
+.line3, .line9 {
     color: #d8d120;
 }
 
-.line4 {
+.line4, .line10 {
     color: #1297b4;
 }
 
-.line5 {
+.line5, .line11 {
     color: #94c13d;
 }
 
@@ -69,6 +69,6 @@ h1, p {
     color: #ef3897;
 }
 
-.line7 {
+.line12 {
     color: white;
 }

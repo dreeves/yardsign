@@ -316,6 +316,11 @@ fitty('.line4');
 fitty('.line5');
 fitty('.line6');
 fitty('.line7');
+fitty('.line8');
+fitty('.line9');
+fitty('.line10');
+fitty('.line11');
+fitty('.line12');
 
 function lineChanged(target) {
     textElementClass = "." + target;
@@ -327,7 +332,7 @@ function lineChanged(target) {
     // update search params
     if (history.pushState) {
         let searchParams = new URLSearchParams();
-        for (let i = 1; i <= 7; i++) {
+        for (let i = 1; i <= 12; i++) {
             line = "line" + i;
             formElement = document.getElementById(line);
             searchParams.set(line, formElement.value);
@@ -360,7 +365,7 @@ function copyToClipboard() {
 
 const params = new URLSearchParams(window.location.search);
 
-for (let i = 1; i <= 7; i++) {
+for (let i = 1; i <= 12; i++) {
     line = "line" + i;
     if (params.has(line)) {
         formElement = document.getElementById(line);
