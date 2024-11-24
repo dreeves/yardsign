@@ -1,3 +1,18 @@
+function updateScale() {
+    const elem = document.getElementById('cynosure');
+    const naturalWidth = elem.offsetWidth;
+    const naturalHeight = elem.offsetHeight;
+
+    const scaleX = (window.innerWidth  * 0.99) / naturalWidth;
+    const scaleY = (window.innerHeight * 0.99) / naturalHeight;
+    const scale = Math.min(scaleX, scaleY);
+
+    elem.style.transform = `scale(${scale})`;
+}
+window.addEventListener('load', updateScale); // initial scale
+window.addEventListener('resize', updateScale); // update scale on resize
+
+
 // Derived from fitty, with fix for line height:
 // https://github.com/rikschennink/fitty/blob/gh-pages/src/fitty.js
 

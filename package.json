@@ -1,0 +1,16 @@
+{
+  "name": "yardsign",
+  "version": "1.0.0",
+  "description": "![image](https://github.com/user-attachments/assets/690e861a-88d0-4b0e-9f1a-e7cc321cad21)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}

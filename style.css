@@ -1,0 +1,117 @@
+/* this version worked fine with browser zoom: #SCHDEL
+body {
+    background: black;
+    margin: 0;
+    padding: 0;
+}
+.centerme {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+*/
+
+/* this version maybe works ok but not at all window sizes
+body {
+    background: black;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#cynosure {
+    max-width: 99vw;
+    max-height: 99vh;
+    width: auto;
+    height: auto;
+}
+*/
+
+/* this version is close to working but the outline is too thick */
+body {
+    background: black;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#cynosure {
+    transform-origin: center;
+}
+
+
+div {
+    font-family: 'Urbanist';
+    text-transform: uppercase;
+}
+
+form {
+    color: white;
+}
+
+input {
+    width: 100%;
+}
+
+h1, p {
+    color: white;
+}
+
+#save {
+    width: auto;
+    float: right;
+}
+
+#sign {
+    padding: 10px;
+    background: black;
+}
+
+.sign-outline {
+    outline: 2px;
+    outline-color: white;
+    outline-style: solid;
+    /* width: 620px; */
+}
+
+.form {
+    width: 400px;
+}
+
+.sign-content {
+    /* width: 600px; */
+    margin: 10px;
+}
+
+.line1, .line7 {
+    color: white;
+}
+
+.line2, .line8 {
+    color: #b55d19;
+}
+
+.line3, .line9 {
+    color: #d8d120;
+}
+
+.line4, .line10 {
+    color: #1297b4;
+}
+
+.line5, .line11 {
+    color: #94c13d;
+}
+
+.line6 {
+    color: #ef3897;
+}
+
+.line12 {
+    color: white;
+}

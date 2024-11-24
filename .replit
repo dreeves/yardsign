@@ -1,0 +1,10 @@
+run = "node server.js"
+modules = ["nodejs-22"]
+
+[[ports]]
+localPort = 8080
+externalPort = 80
+
+[deployment]
+deploymentTarget = "static"
+publicDir = "/"
