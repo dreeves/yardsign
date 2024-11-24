@@ -1,36 +1,29 @@
-/* this version worked fine with browser zoom: #SCHDEL
-body {
-    background: black;
-    margin: 0;
-    padding: 0;
+#popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #333;
+  color: white;
+  border: 2px solid #333;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+  }
+/* Backdrop to give a modal-like effect */
+#backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
-.centerme {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
-*/
-
-/* this version maybe works ok but not at all window sizes
-body {
-    background: black;
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#cynosure {
-    max-width: 99vw;
-    max-height: 99vh;
-    width: auto;
-    height: auto;
-}
-*/
-
-/* this version is close to working but the outline is too thick */
+  
+/* this version works with javascript doing the resizing */
 body {
     background: black;
     margin: 0;
@@ -39,7 +32,6 @@ body {
     align-items: center;
     justify-content: center;
 }
-
 #cynosure {
     transform-origin: center;
 }

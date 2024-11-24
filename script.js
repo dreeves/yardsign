@@ -1,17 +1,80 @@
-function updateScale() {
-    const elem = document.getElementById('cynosure');
-    const naturalWidth = elem.offsetWidth;
-    const naturalHeight = elem.offsetHeight;
+// Get references to the popup and backdrop elements
+const popup = document.getElementById('popup');
+const backdrop = document.getElementById('backdrop');
 
-    const scaleX = (window.innerWidth  * 0.99) / naturalWidth;
-    const scaleY = (window.innerHeight * 0.99) / naturalHeight;
-    const scale = Math.min(scaleX, scaleY);
-
-    elem.style.transform = `scale(${scale})`;
+// Function to show the popup
+function showPopup() {
+  popup.style.display = 'block';
+  backdrop.style.display = 'block';
 }
-window.addEventListener('load', updateScale); // initial scale
-window.addEventListener('resize', updateScale); // update scale on resize
 
+// Function to hide the popup
+function hidePopup() {
+  popup.style.display = 'none';
+  backdrop.style.display = 'none';
+}
+
+// Show the popup when the screen is clicked, except when clicking inside the popup
+document.addEventListener('click', function(event) {
+  if (!popup.contains(event.target) && event.target !== backdrop) {
+    showPopup();
+  }
+});
+
+// Hide the popup if the backdrop is clicked
+backdrop.addEventListener('click', hidePopup);
+
+
+// There must be a way to do this in CSS but LLMs and I are too dumb.
+function updateScale() {
+  console.log("updateScale called");
+  const elem = document.getElementById('cynosure');
+  if (!elem) return;
+  const currentWidth = elem.offsetWidth;
+  const currentHeight = elem.offsetHeight;
+
+  console.log(`Dimensions: ${currentWidth}x${currentHeight}`);
+
+  // Store these dimensions to detect changes
+  if (!elem.lastWidth) {
+    elem.lastWidth = currentWidth;
+    elem.lastHeight = currentHeight;
+    // Check again in case dimensions change
+    requestAnimationFrame(updateScale);
+    return;
+  }
+  // If dimensions changed, update and check again
+  if (elem.lastWidth !== currentWidth || elem.lastHeight !== currentHeight) {
+    elem.lastWidth = currentWidth;
+    elem.lastHeight = currentHeight;
+    requestAnimationFrame(updateScale);
+    return;
+  }
+  const scaleX = (window.innerWidth * 0.95) / currentWidth;
+  const scaleY = (window.innerHeight * 0.95) / currentHeight;
+  const scale = Math.min(scaleX, scaleY);
+
+  console.log(`Applying scale: ${scale}`);
+  elem.style.transform = `scale(${scale})`;
+}
+
+function debounce(func, delay) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+const debouncedUpdateScale = debounce(updateScale, 100);
+// Call on initial load
+window.addEventListener('load', updateScale);
+// Call when DOM is ready
+document.addEventListener('DOMContentLoaded', updateScale);
+// Call when fonts are loaded
+document.fonts.ready.then(updateScale);
+// Call when window is resized (using existing debounced version)
+window.addEventListener('resize', debouncedUpdateScale);
 
 // Derived from fitty, with fix for line height:
 // https://github.com/rikschennink/fitty/blob/gh-pages/src/fitty.js
