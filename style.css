@@ -9,10 +9,9 @@
   color: white;
   border: 2px solid #333;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-  }
-/* Backdrop to give a modal-like effect */
-#backdrop {
+  z-index: 1000;
+}
+#backdrop { /* backdrop gives modal-like effect */
   display: none;
   position: fixed;
   top: 0;
@@ -23,87 +22,62 @@
   z-index: 999;
 }
   
-/* this version works with javascript doing the resizing */
+/* this version works with javascript doing the resizing, dumb as that is */
 body {
-    background: black;
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background: black;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 #cynosure {
-    transform-origin: center;
+  transform-origin: center;
 }
-
 
 div {
-    font-family: 'Urbanist';
-    text-transform: uppercase;
+  /* firefox needs sans-serif as a fallback font otherwise it shows thin/hair
+     spaces as little boxes */
+  font-family: 'Urbanist', sans-serif; 
+  text-transform: uppercase;
 }
 
-form {
-    color: white;
-}
+form { color: white; }
 
-input {
-    width: 100%;
-}
+input { width: 100%; }
 
-h1, p {
-    color: white;
-}
+h1, p { color: white; }
 
 #save {
-    width: auto;
-    float: right;
+  width: auto;
+  float: right;
 }
 
 #sign {
-    padding: 10px;
-    background: black;
+  padding: 10px;
+  background: black;
 }
 
 .sign-outline {
-    outline: 2px;
-    outline-color: white;
-    outline-style: solid;
-    /* width: 620px; */
+  outline: 2px;
+  outline-color: white;
+  outline-style: solid;
+  /* width: 620px; */
 }
 
 .form {
-    width: 400px;
+  width: 400px;
 }
 
 .sign-content {
-    /* width: 600px; */
-    margin: 10px;
+  /* width: 600px; */
+  margin: 10px;
 }
 
-.line1, .line7 {
-    color: white;
-}
-
-.line2, .line8 {
-    color: #b55d19;
-}
-
-.line3, .line9 {
-    color: #d8d120;
-}
-
-.line4, .line10 {
-    color: #1297b4;
-}
-
-.line5, .line11 {
-    color: #94c13d;
-}
-
-.line6 {
-    color: #ef3897;
-}
-
-.line12 {
-    color: white;
-}
+.line1, .line7 { color: white; }
+.line2, .line8 { color: #b55d19; }
+.line3, .line9 { color: #d8d120; }
+.line4, .line10 { color: #1297b4; }
+.line5, .line11 { color: #94c13d; }
+.line6 { color: #ef3897; }
+.line12 { color: white; }

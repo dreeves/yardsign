@@ -311,10 +311,8 @@ const defaultOptions = {
 function fittyCreate(elements, options) {
     // set options object
     const fittyOptions = Object.assign({},
-
                                        // expand default options
                                        defaultOptions,
-
                                        // override with custom options
                                        options
                                       );
@@ -394,26 +392,29 @@ fitty('.line10');
 fitty('.line11');
 fitty('.line12');
 
+// dreev: adding updateScale to the start and end of this in case it helps
 function lineChanged(target) {
-    textElementClass = "." + target;
-    line = document.querySelector(textElementClass);
-    formElement = document.getElementById(target);
+  requestAnimationFrame(updateScale);
 
-    line.textContent = formElement.value;
+  textElementClass = "." + target;
+  line = document.querySelector(textElementClass);
+  formElement = document.getElementById(target);
 
-    // update search params
-    if (history.pushState) {
-        let searchParams = new URLSearchParams();
-        for (let i = 1; i <= 12; i++) {
-            line = "line" + i;
-            formElement = document.getElementById(line);
-            searchParams.set(line, formElement.value);
-        }
-        let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
-        window.history.pushState({path: newurl}, '', newurl);
+  line.textContent = formElement.value;
+
+  // update search params
+  if (history.pushState) {
+    let searchParams = new URLSearchParams();
+    for (let i = 1; i <= 12; i++) {
+      line = "line" + i;
+      formElement = document.getElementById(line);
+      searchParams.set(line, formElement.value);
     }
-    
-    requestAnimationFrame(updateScale);
+    let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
+    window.history.pushState({path: newurl}, '', newurl);
+  }
+
+  requestAnimationFrame(updateScale);
 }
 
 function copyToClipboard() {
