@@ -60,14 +60,46 @@ function debounce(func, delay) {
 }
 
 const debouncedUpdateScale = debounce(updateScale, 100);
-// Call on initial load
-window.addEventListener('load', updateScale);
-// Call when DOM is ready
-document.addEventListener('DOMContentLoaded', updateScale);
-// Call when fonts are loaded
-document.fonts.ready.then(updateScale);
-// Call when window is resized (using existing debounced version)
-window.addEventListener('resize', debouncedUpdateScale);
+
+// Ensure everything is loaded before initializing
+function initialize() {
+  // Wait for both DOM and fonts to be ready
+  Promise.all([
+    new Promise(resolve => {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', resolve);
+      } else {
+        resolve();
+      }
+    }),
+    document.fonts.ready
+  ]).then(() => {
+    // Initialize fitty for all lines
+    fitty('.line1');
+    fitty('.line2');
+    fitty('.line3');
+    fitty('.line4');
+    fitty('.line5');
+    fitty('.line6');
+    fitty('.line7');
+    fitty('.line8');
+    fitty('.line9');
+    fitty('.line10');
+    fitty('.line11');
+    fitty('.line12');
+    
+    updateSignFromTextarea();
+    fitty.fitAll(); // Recalculate all line sizes
+    fitty.fitAll(); // Recalculate all line sizes again to be sure
+    requestAnimationFrame(updateScale);
+    
+    // Set up event listeners
+    window.addEventListener('resize', debouncedUpdateScale);
+  });
+}
+
+// Start initialization
+initialize();
 
 
 // Derived from fitty, with fix for line height:
@@ -379,43 +411,58 @@ fitty.observeWindowDelay = 100;
 // public fit all method, will force redraw no matter what
 fitty.fitAll = redrawAll(DrawState.DIRTY);
 
-fitty('.line1');
-fitty('.line2');
-fitty('.line3');
-fitty('.line4');
-fitty('.line5');
-fitty('.line6');
-fitty('.line7');
-fitty('.line8');
-fitty('.line9');
-fitty('.line10');
-fitty('.line11');
-fitty('.line12');
 
-// dreev: adding updateScale to the start and end of this in case it helps
-function lineChanged(target) {
+
+// Load initial content from URL if present
+const params = new URLSearchParams(window.location.search);
+if (params.has('signcopy')) {
+  document.getElementById('signText').value = params.get('signcopy');
+}
+
+// Core function to update sign display from text
+function updateSign(signText) {
+  const lines = signText.split('\n');
+
+  // Update each line of the sign
+  for (let i = 1; i <= 12; i++) {
+    const line = document.querySelector('.line' + i);
+    if (line) {
+      line.innerHTML = lines[i-1] || ''; // Clear line if no content
+    }
+  }
+  // Explicitly refit each line
+  for (let i = 1; i <= 12; i++) {
+    fitty('.line' + i);
+  }
+  fitty.fitAll(); // Recalculate all line sizes
+  fitty.fitAll(); // Recalculate all line sizes
   requestAnimationFrame(updateScale);
+}
 
-  textElementClass = "." + target;
-  line = document.querySelector(textElementClass);
-  formElement = document.getElementById(target);
 
-  line.textContent = formElement.value;
 
+// Function to update sign and URL from textarea
+function updateSignFromTextarea() {
+  const textarea = document.getElementById('signText');
+  
+  // Core update wrapped in animation frame
+  requestAnimationFrame(() => {
+    updateSign(textarea.value);
+    fitty.fitAll(); // Ensure all lines are fitted
+    requestAnimationFrame(updateScale);
+  });
+  
   // update search params
   if (history.pushState) {
     let searchParams = new URLSearchParams();
-    for (let i = 1; i <= 12; i++) {
-      line = "line" + i;
-      formElement = document.getElementById(line);
-      searchParams.set(line, formElement.value);
-    }
+    searchParams.set('signcopy', textarea.value);
     let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
     window.history.pushState({path: newurl}, '', newurl);
   }
-
-  requestAnimationFrame(updateScale);
 }
+
+// Add event listener for textarea changes
+document.getElementById('signText').addEventListener('input', updateSignFromTextarea);
 
 function copyToClipboard() {
     div = document.getElementById("sign");
@@ -436,15 +483,4 @@ function copyToClipboard() {
             });
         }
     });
-}
-
-const params = new URLSearchParams(window.location.search);
-
-for (let i = 1; i <= 12; i++) {
-    line = "line" + i;
-    if (params.has(line)) {
-        formElement = document.getElementById(line);
-        formElement.value = params.get(line);
-        lineChanged(line)
-    }
 }
